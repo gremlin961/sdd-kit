@@ -1,0 +1,19 @@
+# Project Context
+
+## Stack
+<!-- SDD-SETUP: replace this section with the detected stack -->
+- <Language, framework, test runner>. <one line: what the project does>.
+
+## Conventions
+<!-- SDD-SETUP: replace with detected conventions -->
+- <commit style if visible from git log>.
+- Business logic in `<code dir>/`, tests in `<test dir>/`, <test layout>.
+- Scenario-style specs: every requirement is a `#### Scenario:` block with
+  GIVEN/WHEN/THEN so it maps 1:1 to a pytest case.
+
+## Rules for artifacts
+- proposal: keep under 500 words. Always include "Non-goals".
+- tasks: each task must be completable in one agent session; max ~15 tasks
+  per change; each task names the files it touches.
+- design: required only when the change touches more than 3 files or changes
+  a public contract.

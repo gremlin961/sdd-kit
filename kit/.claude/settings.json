@@ -1,0 +1,75 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "permissions": {
+    "allow": [
+      "Read(./**)",
+      "Grep(**)",
+      "Glob(**)",
+      "Bash(pytest tests/ -q*)",
+      "Bash(ruff check .*)",
+      "Bash(git status*)",
+      "Bash(git diff*)",
+      "Bash(git log*)",
+      "Bash(openspec list*)",
+      "Bash(openspec status*)",
+      "Bash(openspec instructions*)",
+      "Bash(openspec validate*)"
+    ],
+    "deny": [
+      "Bash(git push*)",
+      "Bash(git commit*)",
+      "Bash(rm *)",
+      "Bash(curl *)",
+      "Bash(openspec archive*)",
+      "Read(./.env*)",
+      "Read(./secrets/**)"
+    ]
+  },
+  "env": {
+    "ANTHROPIC_SMALL_FAST_MODEL": "claude-haiku-4-5"
+  },
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "$CLAUDE_PROJECT_DIR/.claude/hooks/session_start.sh"
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Read",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "$CLAUDE_PROJECT_DIR/.claude/hooks/block_bulk_read.sh"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "$CLAUDE_PROJECT_DIR/.claude/hooks/token_audit.sh"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "$CLAUDE_PROJECT_DIR/.claude/hooks/session_end.sh"
+          }
+        ]
+      }
+    ]
+  }
+}

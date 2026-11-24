@@ -1,0 +1,38 @@
+# SDD Kit: spec-driven development for Claude Code and OpenCode
+
+A copyable repo template implementing a token-disciplined spec-driven
+development (SDD) workflow. Shared contract layer (AGENTS.md + openspec/)
+works identically across two harnesses: Claude Code (API-billed, cost hooks
+and permissions) and OpenCode (local/self-hosted models, context-window
+discipline). Optional conceptualize → explore → propose → apply → verify →
+archive loop with human review gates between phases.
+
+Two install paths:
+
+1. If `~/.config/sdd-kit/repo` exists (written by this repo's install.sh),
+   the user has a user-level `/sdd-kit:init` (Claude Code) or
+   `/sdd-kit-init` (OpenCode) command. That command reads
+   `~/.config/sdd-kit/repo` for the clone path, then follows
+   [INSTALL.md](INSTALL.md) Steps 1–4 in the CURRENT project.
+2. Otherwise, an agent should read and follow [INSTALL.md](INSTALL.md)
+   exactly — it contains the full detection, copy, and template-adaptation
+   procedure. The kit payload is under `kit/`; never copy this repo's own
+   distribution docs into a target repo.
+
+## Docs
+
+- [INSTALL.md](INSTALL.md): agent installation procedure (start here)
+- [README.md](README.md): full kit documentation, repo layout, cost logic, side-by-side test protocol
+- [kit/GREENFIELD.md](kit/GREENFIELD.md): greenfield flow (empty repo, idea first)
+- [kit/openspec/config.yaml](kit/openspec/config.yaml): artifact budget rules
+
+The kit payload itself lives under `kit/` — see the `Repo layout` section of
+README.md for the full tree.
+
+## Notes
+
+- This kit deliberately ships NO `opencode.json` — provider/API config
+  belongs to each user's global OpenCode config. Agents must never create
+  or modify one.
+- `openspec init` must NOT be run on repos using this kit; the kit ships
+  its own curated openspec/ structure.
