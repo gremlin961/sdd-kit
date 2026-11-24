@@ -21,6 +21,14 @@ Two install paths:
    procedure. The kit payload is under `kit/`; never copy this repo's own
    distribution docs into a target repo.
 
+## Uninstall
+
+- Machine level: `uninstall.sh` (mirrors install.sh; `--purge` also deletes
+  the clone, guarded by the marker file).
+- Project level: no script by design — remove the kit paths with `git rm`,
+  keep `openspec/changes/*` and `project.md` (user spec work); see README
+  "Removing the kit from a project".
+
 ## Docs
 
 - [INSTALL.md](INSTALL.md): agent installation procedure (start here)

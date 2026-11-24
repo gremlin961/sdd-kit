@@ -80,6 +80,52 @@ and asks keep-or-replace per file — your edits win by default. It never
 touches `openspec/changes/*`, `openspec/specs/*`, application code, or
 `opencode.json`.
 
+### Uninstalling (machine level)
+
+```bash
+~/sdd-kit/uninstall.sh          # remove user-level command files + marker
+~/sdd-kit/uninstall.sh --purge  # also delete the clone itself
+```
+
+`uninstall.sh` mirrors `install.sh` exactly: removes the four user-level
+command files (`~/.claude/commands/sdd-kit/{init,update}.md`,
+`~/.config/opencode/command/sdd-kit-{init,update}.md`) and the
+`~/.config/sdd-kit/` marker, then drops the now-empty directories. The
+`--purge` flag additionally deletes the clone — but only if the marker file
+names the directory the script lives in, so it can't `rm -rf` something
+arbitrary. `--purge` on a machine whose marker is gone prints the safe
+manual command instead of guessing.
+
+### Removing the kit from a project
+
+No script for this one, on purpose — it needs judgment, not bookkeeping.
+The kit files were committed (`chore: SDD harness config`), so removal is
+normal git surgery:
+
+```bash
+git rm -r .claude/hooks .claude/agents .claude/commands/opsx .opencode/ \
+          openspec/changes/_TEMPLATE_
+git rm .claude/settings.json .claude/hooks/*.sh 2>/dev/null
+git rm GREENFIELD.md
+# then commit
+```
+
+**Decide before deleting:**
+
+- `openspec/changes/<id>/` (anything except `_TEMPLATE_`) is your actual
+  spec work — proposals, specs, tasks, concepts. Keep it unless the project
+  is truly dead; it's plain markdown and outlives the harness.
+- `openspec/project.md` and `openspec/specs/` — the project brief and
+  accumulated specs. Usually worth keeping even if you drop the kit.
+- `AGENTS.md`, `CLAUDE.md`, `openspec/config.yaml` — these have your
+  hand-adapted Stack/Conventions sections. If you keep any of them, strip
+  the SDD-discipline sections; the rest is project documentation.
+- Git history preserves everything regardless — removing the kit is
+  reversible with a `revert`.
+
+If you're abandoning the machine entirely: `uninstall.sh --purge` handles
+the user level; each project needs the manual git surgery above.
+
 ### The point-at-repo way (no user-level install)
 
 Point your coding agent at this repo and say "install the SDD kit in this

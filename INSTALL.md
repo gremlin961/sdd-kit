@@ -147,3 +147,15 @@ Tell the user, concisely:
 - Do not run any opsx workflow commands as part of setup — this session
   installs; the next session starts the loop.
 - Do not write application code, period.
+
+## Uninstall
+
+- User asked to remove the kit from THIS machine (not a project):
+  run `uninstall.sh` from the kit clone (add `--purge` to also delete the
+  clone; it refuses unless the marker file names the script's own dir).
+  Script has the exact file list — never hand-roll the deletion.
+- User asked to remove the kit from THIS project: that's git surgery plus
+  judgment — see README "Removing the kit from a project". Preserve
+  `openspec/changes/*` (excluding `_TEMPLATE_`) and `openspec/project.md`
+  unless the user explicitly says the project is dead; those are the user's
+  spec work, not kit plumbing.
