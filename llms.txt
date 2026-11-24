@@ -10,10 +10,12 @@ archive loop with human review gates between phases.
 Two install paths:
 
 1. If `~/.config/sdd-kit/repo` exists (written by this repo's install.sh),
-   the user has a user-level `/sdd-kit:init` (Claude Code) or
-   `/sdd-kit-init` (OpenCode) command. That command reads
-   `~/.config/sdd-kit/repo` for the clone path, then follows
-   [INSTALL.md](INSTALL.md) Steps 1–4 in the CURRENT project.
+   the user has user-level commands: `/sdd-kit:init`|`/sdd-kit:update`
+   (Claude Code) and `/sdd-kit-init`|`/sdd-kit-update` (OpenCode). They
+   read `~/.config/sdd-kit/repo` for the clone path; init follows
+   [INSTALL.md](INSTALL.md) Steps 1–4 in the CURRENT project; update
+   refreshes never-adapted harness files and diffs the user-adapted
+   contract files (user edits win by default).
 2. Otherwise, an agent should read and follow [INSTALL.md](INSTALL.md)
    exactly — it contains the full detection, copy, and template-adaptation
    procedure. The kit payload is under `kit/`; never copy this repo's own

@@ -11,9 +11,11 @@ mkdir -p "$HOME/.claude/commands/sdd-kit" "$HOME/.config/opencode/command" "$HOM
 
 cp "$KIT_DIR/init/claude-sdd-kit-init.md"   "$HOME/.claude/commands/sdd-kit/init.md"
 cp "$KIT_DIR/init/opencode-sdd-kit-init.md" "$HOME/.config/opencode/command/sdd-kit-init.md"
+cp "$KIT_DIR/init/claude-sdd-kit-update.md" "$HOME/.claude/commands/sdd-kit/update.md"
+cp "$KIT_DIR/init/opencode-sdd-kit-update.md" "$HOME/.config/opencode/command/sdd-kit-update.md"
 printf '%s\n' "$KIT_DIR" > "$HOME/.config/sdd-kit/repo"
 
 echo "SDD kit installed (user level)."
 echo "  Kit source:   $KIT_DIR  (git pull here to update)"
-echo "  Claude Code:  run  /sdd-kit:init   inside any project"
-echo "  OpenCode:     run  /sdd-kit-init   inside any project"
+echo "  Claude Code:  /sdd-kit:init | /sdd-kit:update   in any project"
+echo "  OpenCode:     /sdd-kit-init | /sdd-kit-update   in any project"

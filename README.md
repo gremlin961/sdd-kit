@@ -53,13 +53,13 @@ kit/          ← the payload, copied verbatim into a target repo root:
 git clone https://github.com/gremlin961/sdd-kit ~/sdd-kit && ~/sdd-kit/install.sh
 ```
 
-That copies the `/sdd-kit:init` command files to user level
-(`~/.claude/commands/sdd-kit/init.md` and
-`~/.config/opencode/command/sdd-kit-init.md`) and records the clone path.
-Then, in ANY project:
+That copies the user-level command files to
+`~/.claude/commands/sdd-kit/{init,update}.md` and
+`~/.config/opencode/command/sdd-kit-{init,update}.md`, and records the
+clone path. Then, in ANY project:
 
-- **Claude Code:** launch and run `/sdd-kit:init`
-- **OpenCode:** launch and run `/sdd-kit-init`
+- **Claude Code:** `/sdd-kit:init` (install) · `/sdd-kit:update` (update)
+- **OpenCode:** `/sdd-kit-init` (install) · `/sdd-kit-update` (update)
 
 The init command follows [INSTALL.md](INSTALL.md) — detects
 greenfield/brownfield/existing-kit, asks the harness question, copies
@@ -68,6 +68,17 @@ there updates every future init), adapts the templates to your stack, and
 then asks how to start: **explore the repo** (concrete change, brownfield)
 or **conceptualize first** (fuzzy idea) — and immediately runs that phase.
 Greenfield repos get pointed at `/opsx:bootstrap` in a fresh session.
+
+### Updating an installed project (`/sdd-kit:update`)
+
+After `git pull` in the clone, run `/sdd-kit:update` (or `/sdd-kit-update`)
+inside a project: it pulls the clone (`--ff-only`), **refreshes** files that
+are never user-adapted (hooks, agents, opsx commands, settings.json,
+`_TEMPLATE_`, GREENFIELD.md), **diffs** the user-adapted contract files
+(`AGENTS.md`, `CLAUDE.md`, `openspec/config.yaml`, `openspec/project.md`)
+and asks keep-or-replace per file — your edits win by default. It never
+touches `openspec/changes/*`, `openspec/specs/*`, application code, or
+`opencode.json`.
 
 ### The point-at-repo way (no user-level install)
 
