@@ -3,6 +3,8 @@ description: Implement the next unchecked task from tasks.md (one task per sessi
 allowed-tools: Read, Edit, Write, Bash(pytest*), Bash(ruff*), Bash(git diff*), Bash(git status*), Task
 ---
 
+> Parity: the OpenCode twin of this file is kit/.opencode/command/opsx-apply.md. Bodies differ on purpose (Claude dispatches subagents and runs tests in-session), but STEP LOGIC must match — if you change steps here, change them there too.
+
 Start the SDD apply phase. STRICT SCOPE: one unchecked task, nothing else.
 
 Steps:

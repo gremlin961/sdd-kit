@@ -47,96 +47,25 @@ kit/          ← the payload, copied verbatim into a target repo root:
 
 ## Installing into another project
 
-### The quick way (user-level install, once per machine)
+The full install, update, uninstall, and project-removal procedures live in
+one place: [INSTALL.md](INSTALL.md) — the canonical agent procedure. Short
+version for humans:
 
 ```bash
 git clone https://github.com/gremlin961/sdd-kit ~/sdd-kit && ~/sdd-kit/install.sh
 ```
 
-That copies the user-level command files to
-`~/.claude/commands/sdd-kit/{init,update}.md` and
-`~/.config/opencode/command/sdd-kit-{init,update}.md`, and records the
-clone path. Then, in ANY project:
-
-- **Claude Code:** `/sdd-kit:init` (install) · `/sdd-kit:update` (update)
-- **OpenCode:** `/sdd-kit-init` (install) · `/sdd-kit-update` (update)
-
-The init command follows [INSTALL.md](INSTALL.md) — detects
-greenfield/brownfield/existing-kit, asks the harness question, copies
-`kit/` from the clone (the repo stays the single source of truth; `git pull`
-there updates every future init), adapts the templates to your stack, and
-then asks how to start: **explore the repo** (concrete change, brownfield)
-or **conceptualize first** (fuzzy idea) — and immediately runs that phase.
-Greenfield repos get pointed at `/opsx:bootstrap` in a fresh session.
-
-### Updating an installed project (`/sdd-kit:update`)
-
-After `git pull` in the clone, run `/sdd-kit:update` (or `/sdd-kit-update`)
-inside a project: it pulls the clone (`--ff-only`), **refreshes** files that
-are never user-adapted (hooks, agents, opsx commands, settings.json,
-`_TEMPLATE_`, GREENFIELD.md), **diffs** the user-adapted contract files
-(`AGENTS.md`, `CLAUDE.md`, `openspec/config.yaml`, `openspec/project.md`)
-and asks keep-or-replace per file — your edits win by default. It never
-touches `openspec/changes/*`, `openspec/specs/*`, application code, or
-`opencode.json`.
-
-### Uninstalling (machine level)
-
-```bash
-~/sdd-kit/uninstall.sh          # remove user-level command files + marker
-~/sdd-kit/uninstall.sh --purge  # also delete the clone itself
-```
-
-`uninstall.sh` mirrors `install.sh` exactly: removes the four user-level
-command files (`~/.claude/commands/sdd-kit/{init,update}.md`,
-`~/.config/opencode/command/sdd-kit-{init,update}.md`) and the
-`~/.config/sdd-kit/` marker, then drops the now-empty directories. The
-`--purge` flag additionally deletes the clone — but only if the marker file
-names the directory the script lives in, so it can't `rm -rf` something
-arbitrary. `--purge` on a machine whose marker is gone prints the safe
-manual command instead of guessing.
-
-### Removing the kit from a project
-
-No script for this one, on purpose — it needs judgment, not bookkeeping.
-The kit files were committed (`chore: SDD harness config`), so removal is
-normal git surgery:
-
-```bash
-git rm -r .claude/hooks .claude/agents .claude/commands/opsx .opencode/ \
-          openspec/changes/_TEMPLATE_
-git rm .claude/settings.json .claude/hooks/*.sh 2>/dev/null
-git rm GREENFIELD.md
-# then commit
-```
-
-**Decide before deleting:**
-
-- `openspec/changes/<id>/` (anything except `_TEMPLATE_`) is your actual
-  spec work — proposals, specs, tasks, concepts. Keep it unless the project
-  is truly dead; it's plain markdown and outlives the harness.
-- `openspec/project.md` and `openspec/specs/` — the project brief and
-  accumulated specs. Usually worth keeping even if you drop the kit.
-- `AGENTS.md`, `CLAUDE.md`, `openspec/config.yaml` — these have your
-  hand-adapted Stack/Conventions sections. If you keep any of them, strip
-  the SDD-discipline sections; the rest is project documentation.
-- Git history preserves everything regardless — removing the kit is
-  reversible with a `revert`.
-
-If you're abandoning the machine entirely: `uninstall.sh --purge` handles
-the user level; each project needs the manual git surgery above.
-
-### The point-at-repo way (no user-level install)
-
-Point your coding agent at this repo and say "install the SDD kit in this
-repo." The agent reads [llms.txt](llms.txt) → follows
-[INSTALL.md](INSTALL.md). Same procedure, no `install.sh` — useful on
-machines you don't want to touch, or when you can't clone locally.
-
-### Manual
-
-Copy `kit/*` into your project root yourself, then fill the Stack section of
-`AGENTS.md` and create `openspec/project.md` by hand (see INSTALL.md Step 4).
+That installs user-level commands (`/sdd-kit:init` · `/sdd-kit:update` in
+Claude Code, `/sdd-kit-init` · `/sdd-kit-update` in OpenCode) and records
+the clone path. Run `/sdd-kit:init` in any project to install the kit into
+it — the agent detects greenfield/brownfield, copies `kit/`, adapts the
+templates to your stack, and hands off to the right first phase. Updating
+an installed project: `git pull` in the clone, then `/sdd-kit:update` — it
+refreshes never-adapted harness files and diffs your hand-edited contract
+files, asking keep-or-replace, your edits win. Machine uninstall:
+`~/sdd-kit/uninstall.sh` (add `--purge` to also delete the clone). This
+README intentionally keeps no more procedure than that; anything more
+detailed would drift from INSTALL.md.
 
 ## Two entry points
 
@@ -226,15 +155,49 @@ model long-context signal).
 5. **The reviewer catches what the implementer breaks** — count findings by
    severity. If zero ever, the reviewer is rubber-stamping; tighten its prompt.
 
-### Expected result
-Claude Code with this config should land around 30-60% cheaper than an
-unguided session doing the same change, mostly from (a) no re-discovery,
-(b) no prefix-resend death spiral, (c) cheap-model exploration. Local models
-won't show a dollar difference — their win shows up as *quality retention*
-in sessions 4+ and in how many tasks fit in one context window.
+### Expected result (unverified hypothesis)
+
+**This figure is an estimate, not a measurement.** Nothing in this repo has
+been benchmarked yet — the protocol below is how it gets measured. Working
+expectation, to be proven or discarded: Claude Code with this config lands
+~30–60% cheaper than an unguided session doing the same change, mostly from
+(a) no re-discovery, (b) no prefix-resend death spiral, (c) cheap-model
+exploration. Local models won't show a dollar difference — their win shows
+up as *quality retention* in sessions 4+ and in how many tasks fit in one
+context window.
+
+**Per-session cost log template** — fill it after every session; this is
+what turns the estimate into a number:
+
+```
+| date | harness | change-id | phase | model | /cost or tokens | wall-time | re-rolls | notes |
+|------|---------|-----------|-------|-------|-----------------|-----------|----------|-------|
+|      |         |           |       |       |                 |           |          |       |
+```
 
 ## Notes / gotchas
 
+- **Permission denies are guardrails, not a security boundary.** The `deny`
+  list uses prefix patterns (`Bash(rm *)`, `Bash(git commit*)`, `Bash(curl *)`)
+  that a determined model can bypass (`/bin/rm`, `git -C . commit`, `sh -c`).
+  What they actually prevent is the *expensive accident*: an eager agent
+  committing half-finished work or curling something it shouldn't. Treat
+  them as seatbelts against enthusiasm, never as a cage — if you need a real
+  boundary, run the agent in a container or with OS-level sandboxing.
+- **When models change, three places to touch:**
+  (1) `kit/.claude/settings.json` → `env.ANTHROPIC_SMALL_FAST_MODEL`,
+  (2) the `model:` field in each of the 5 `kit/.claude/agents/*.md` files,
+  (3) the model families named in `kit/CLAUDE.md`.
+  A single source of truth isn't possible without a build step (settings
+  and agent frontmatter can't reference a shared config), so this list is
+  the contract — check all three when tiering changes.
+- **Harness parity (the drift risk):** every opsx phase exists twice —
+  `kit/.claude/commands/opsx/<phase>.md` and `kit/.opencode/command/opsx-<phase>.md`
+  — and the bodies are intentionally NOT identical (Claude runs tests and
+  dispatches subagents in-session; OpenCode delegates to agents and the user
+  runs tests). Intentional differences are fine; *silent step drift* is not.
+  When you change a phase's step logic, open BOTH files and apply the same
+  step-level change.
 - `.claude/settings.json` `env.ANTHROPIC_SMALL_FAST_MODEL` sets the background
   model; subagent `model:` fields set per-task tiering.
 - Hooks use `$CLAUDE_PROJECT_DIR` so they work from any cwd.

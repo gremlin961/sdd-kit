@@ -3,6 +3,8 @@ description: Brainstorm a raw idea into concept.md (optional phase before /opsx:
 allowed-tools: Read, Write
 ---
 
+> Parity: the OpenCode twin of this file is kit/.opencode/command/opsx-conceptualize.md. Bodies differ on purpose (Claude dispatches subagents and runs tests in-session), but STEP LOGIC must match — if you change steps here, change them there too.
+
 Start the SDD conceptualize phase. This is a DIVERGENT thinking session —
 the goal is to turn a half-formed idea into a structured concept.md, not to
 design anything. Main session only: do NOT dispatch subagents. This is an

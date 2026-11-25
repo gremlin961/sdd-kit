@@ -2,6 +2,8 @@
 description: Implement the next unchecked task (one task per session)
 ---
 
+> Parity: the Claude Code twin of this file is kit/.claude/commands/opsx/apply.md.md. Bodies differ on purpose (OpenCode delegates to agents; the user runs tests), but STEP LOGIC must match — if you change steps here, change them there too.
+
 Run the apply phase with the `implementer` agent.
 
 STEPS:

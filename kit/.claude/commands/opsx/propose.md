@@ -3,6 +3,8 @@ description: Draft the OpenSpec change artifacts for user approval
 allowed-tools: Task, Read, Write, Bash(openspec *)
 ---
 
+> Parity: the OpenCode twin of this file is kit/.opencode/command/opsx-propose.md. Bodies differ on purpose (Claude dispatches subagents and runs tests in-session), but STEP LOGIC must match — if you change steps here, change them there too.
+
 Start the SDD propose phase. This session's output is the NEXT session's
 context — keep the artifacts lean per the spec-writer agent's budget rules.
 

@@ -2,6 +2,8 @@
 description: Verify a change: deterministic tests + spec-conformance eval + independent review
 ---
 
+> Parity: the Claude Code twin of this file is kit/.claude/commands/opsx/verify.md.md. Bodies differ on purpose (OpenCode delegates to agents; the user runs tests), but STEP LOGIC must match — if you change steps here, change them there too.
+
 Run the verify phase. Verification is THREE things:
 
 1. DETERMINISTIC: the user runs `pytest tests/ -q` and `ruff check .` in their

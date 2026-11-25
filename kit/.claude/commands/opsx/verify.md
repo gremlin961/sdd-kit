@@ -3,6 +3,8 @@ description: Verify a completed change: tests + independent review + spec confor
 allowed-tools: Task, Read, Grep, Glob, Bash(git diff*), Bash(pytest*), Bash(ruff*)
 ---
 
+> Parity: the OpenCode twin of this file is kit/.opencode/command/opsx-verify.md. Bodies differ on purpose (Claude dispatches subagents and runs tests in-session), but STEP LOGIC must match — if you change steps here, change them there too.
+
 Start the SDD verify phase. Verification is THREE things; run all three.
 
 1. DETERMINISTIC: run `pytest tests/ -q` and `ruff check .` yourself and

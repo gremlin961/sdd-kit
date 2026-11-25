@@ -1,5 +1,6 @@
 {
   "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "_comment": "Permission rules here are GUARDRAILS, not a security boundary: prefix patterns like Bash(rm *) are bypassable (/bin/rm, sh -c, git -C). They prevent the expensive accident (eager commits, stray curl), nothing more. Real boundaries need OS/container sandboxing. Model tiering lives in env below + agent frontmatter + CLAUDE.md — see README 'When models change'.",
   "permissions": {
     "allow": [
       "Read(./**)",

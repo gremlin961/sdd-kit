@@ -2,6 +2,8 @@
 description: Bootstrap a brand-new project from a raw idea — no codebase yet
 ---
 
+> Parity: the Claude Code twin of this file is kit/.claude/commands/opsx/bootstrap.md.md. Bodies differ on purpose (OpenCode delegates to agents; the user runs tests), but STEP LOGIC must match — if you change steps here, change them there too.
+
 Greenfield entry point (no code in the repo yet).
 
 STEPS:

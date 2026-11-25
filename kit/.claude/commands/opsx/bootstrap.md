@@ -3,6 +3,8 @@ description: Bootstrap a brand-new project from a raw idea — no codebase yet
 allowed-tools: Task, Read, Write, Bash(git init*), Bash(mkdir*), Bash(git add*), Bash(git commit*)
 ---
 
+> Parity: the OpenCode twin of this file is kit/.opencode/command/opsx-bootstrap.md. Bodies differ on purpose (Claude dispatches subagents and runs tests in-session), but STEP LOGIC must match — if you change steps here, change them there too.
+
 Greenfield entry point. Use this INSTEAD of /opsx:explore when the repo has
 no code (README only, or not even that).
 

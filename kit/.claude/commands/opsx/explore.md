@@ -3,6 +3,8 @@ description: Explore the codebase for a new change (read-only, cheap model)
 allowed-tools: Task, Read, Grep, Glob, Bash(openspec *)
 ---
 
+> Parity: the OpenCode twin of this file is kit/.opencode/command/opsx-explore.md. Bodies differ on purpose (Claude dispatches subagents and runs tests in-session), but STEP LOGIC must match — if you change steps here, change them there too.
+
 Start the SDD explore phase. Context budget: this session should cost almost
 nothing — delegate ALL investigation.
 

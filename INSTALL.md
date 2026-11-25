@@ -148,6 +148,29 @@ Tell the user, concisely:
   installs; the next session starts the loop.
 - Do not write application code, period.
 
+## Updating an installed project (/sdd-kit:update, /sdd-kit-update)
+
+Run in a project that already has the kit. Steps:
+
+1. Resolve the kit source from `~/.config/sdd-kit/repo` (same as init). If
+   the project has no kit (no AGENTS.md, no openspec/), STOP and point the
+   user at init instead.
+2. `git -C <source> pull --ff-only` to refresh the clone. Report the result;
+   continue even if the pull fails (offline is fine, the local clone is
+   still usable).
+3. REFRESH unconditionally — these files are never user-adapted, overwrite
+   them from `<source>/kit/`:
+   `.claude/hooks/*`, `.claude/agents/*`, `.claude/commands/opsx/*`,
+   `.claude/settings.json`, `.opencode/agent/*`, `.opencode/command/*`,
+   `openspec/changes/_TEMPLATE_/`, `GREENFIELD.md`. Then
+   `chmod +x .claude/hooks/*.sh`.
+4. REVIEW — these files may hold user edits; show a unified diff for each
+   and ask keep-or-replace (default keep, user edits win):
+   `AGENTS.md`, `CLAUDE.md`, `openspec/config.yaml`, `openspec/project.md`.
+5. NEVER touch: `openspec/changes/*` (except `_TEMPLATE_`),
+   `openspec/specs/*`, application code, `opencode.json`.
+6. Report: files refreshed, review outcomes, clone commit short SHA.
+
 ## Uninstall
 
 - User asked to remove the kit from THIS machine (not a project):
