@@ -7,7 +7,7 @@ allowed-tools: Task, Read, Grep, Glob, Bash
 
 Start the SDD verify phase. Verification is FOUR things; run all four.
 
-0. VALIDATE: run `.claude/hooks/validate.sh openspec/changes/<active>/` and
+0. VALIDATE: run `scripts/validate.sh openspec/changes/<active>/` and
    include its output verbatim. A failing validation (proposal >500 words,
    >15 tasks, tasks without named files) is a REQUEST CHANGES on its own —
    fix the artifacts before reviewing code. This turns the config.yaml

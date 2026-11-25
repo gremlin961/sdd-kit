@@ -2,7 +2,7 @@
 description: Implement the next unchecked task (one task per session)
 ---
 
-> Parity: the Claude Code twin of this file is kit/.claude/commands/opsx/apply.md.md. Bodies differ on purpose (OpenCode delegates to agents; the user runs tests), but STEP LOGIC must match — if you change steps here, change them there too.
+> Parity: the Claude Code twin of this file is kit/.claude/commands/opsx/apply.md. Bodies differ on purpose (OpenCode delegates to agents; Claude dispatches subagents in-session), but STEP LOGIC must match — if you change steps here, change them there too.
 
 Run the apply phase with the `implementer` agent.
 
@@ -14,5 +14,8 @@ STEPS:
 3. If tasks remain, tell the user to start a FRESH session and re-run
    /opsx-apply. Do not chain tasks in one session.
 
-You do not need to verify the tests yourself — the user runs them in their
-own terminal after the session. "The agent says tests pass" is not evidence.
+EVIDENCE RULE: "the agent says tests pass" is not evidence. The implementer
+must run the test and lint commands itself (from the AGENTS.md Stack
+section) and report VERBATIM output plus exit codes — raw output, never a
+summary. The user may still re-run them in their own terminal; treat that
+as the gold standard when it happens.

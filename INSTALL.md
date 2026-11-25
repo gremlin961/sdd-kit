@@ -24,6 +24,7 @@ kit/CLAUDE.md                          ← thin Claude wrapper
 kit/GREENFIELD.md                      ← greenfield flow doc (yes, ship this one)
 kit/openspec/config.yaml               ← artifact rules
 kit/openspec/changes/_TEMPLATE_/README.md   ← artifact shape example
+kit/scripts/validate.sh                 ← artifact validator (HARNESS-NEUTRAL — install for BOTH)
 kit/.claude/settings.json              ← permissions + 4 hooks
 kit/.claude/hooks/{session_start,block_bulk_read,token_audit,session_end}.sh
 kit/.claude/agents/{architect,ci-triage,spec-explorer,spec-reviewer,spec-writer}.md
@@ -75,14 +76,20 @@ Code**, **OpenCode**, or **both**?
 - **OpenCode only:** install everything EXCEPT `.claude/` and `CLAUDE.md`.
   The kit deliberately ships NO `opencode.json` — model/provider config
   belongs to the user's global OpenCode config; never create or modify one.
+  `kit/scripts/validate.sh` installs for EVERY harness choice — it is
+  harness-neutral (plain bash reading openspec/ artifacts), so OpenCode
+  users run it manually or via /opsx-verify; only the Claude hooks and
+  agents stay Claude-only.
 
 ## Step 3 — Copy the kit
 
 Copy the selected files from this repo's `kit/` into the target repo root,
-preserving paths. Then, if Claude Code files were installed:
+preserving paths. `kit/scripts/validate.sh` → `scripts/validate.sh` (repo
+root, not inside `.claude/`) for every harness choice. Then, if Claude
+Code files were installed:
 
 ```bash
-chmod +x .claude/hooks/*.sh
+chmod +x .claude/hooks/*.sh scripts/validate.sh
 ```
 
 If the target repo is not yet a git repo, note it — greenfield bootstrap
@@ -168,8 +175,9 @@ Run in a project that already has the kit. Steps:
    them from `<source>/kit/`:
    `.claude/hooks/*`, `.claude/agents/*`, `.claude/commands/opsx/*`,
    `.claude/settings.json`, `.opencode/agent/*`, `.opencode/command/*`,
-   `openspec/changes/_TEMPLATE_/`, `GREENFIELD.md`. Then
-   `chmod +x .claude/hooks/*.sh`.
+   `openspec/changes/_TEMPLATE_/`, `GREENFIELD.md`,
+   `scripts/validate.sh`. Then `chmod +x .claude/hooks/*.sh
+   scripts/validate.sh`.
 4. REVIEW — these files may hold user edits; show a unified diff for each
    and ask keep-or-replace (default keep, user edits win):
    `AGENTS.md`, `CLAUDE.md`, `openspec/config.yaml`, `openspec/project.md`.

@@ -32,6 +32,10 @@ kit/          ← the payload, copied verbatim into a target repo root:
     changes/_TEMPLATE_/         ← the artifact shape (proposal/spec/design/tasks)
     (project.md is NOT shipped — brownfield setup creates it; bootstrap creates
      it for greenfield)
+  scripts/
+    validate.sh                 ← artifact validator (HARNESS-NEUTRAL: reads
+                                openspec/ artifacts, exits nonzero on rule
+                                violations; both harnesses + humans run it)
   .claude/
     settings.json               ← permissions (deny push/commit/bulk) + 4 hooks
     hooks/                      ← session_start, block_bulk_read, token_audit, session_end
@@ -90,7 +94,7 @@ Claude Code against the structured concept.md.
 ## After install (in the target repo)
 
 ```bash
-chmod +x .claude/hooks/*.sh
+chmod +x .claude/hooks/*.sh scripts/validate.sh
 # OpenCode users: nothing to configure — your global opencode.json provider
 #   config applies as-is. This kit ships NO opencode.json by design: it never
 #   touches your main config (models, providers, keys stay yours).

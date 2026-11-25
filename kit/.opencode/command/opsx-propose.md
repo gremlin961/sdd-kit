@@ -2,7 +2,7 @@
 description: Draft OpenSpec artifacts for user approval
 ---
 
-> Parity: the Claude Code twin of this file is kit/.claude/commands/opsx/propose.md.md. Bodies differ on purpose (OpenCode delegates to agents; the user runs tests), but STEP LOGIC must match — if you change steps here, change them there too.
+> Parity: the Claude Code twin of this file is kit/.claude/commands/opsx/propose.md. Bodies differ on purpose (OpenCode delegates to agents; Claude dispatches subagents in-session), but STEP LOGIC must match — if you change steps here, change them there too.
 
 Run the propose phase with the `spec-writer` agent.
 
