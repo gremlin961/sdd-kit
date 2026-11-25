@@ -102,14 +102,20 @@ will `git init` later; do not init here unless the user asks.
 3. **Edit `openspec/config.yaml`** — replace the placeholder Conventions
    section with the detected conventions (commit style if visible from
    `git log`, test file layout). Keep the artifact Rules section verbatim.
-4. **Create `openspec/project.md`** — a machine-readable brief, ≤30 lines:
+4. **Non-Python stacks: rewrite the settings.json allow entries.** The kit
+   ships Python defaults (`Bash(pytest tests/ -q*)`, `Bash(ruff check .*)`)
+   in the allow list. Replace them with allow entries matching the Stack
+   section's exact test/lint commands (prefix form, e.g.
+   `Bash(<test command>*)`), and confirm `apply.md`/`verify.md` will find
+   the right commands in AGENTS.md (they read from there at runtime).
+5. **Create `openspec/project.md`** — a machine-readable brief, ≤30 lines:
    what the project is (from README or a 1-minute look), architecture map
    of the main modules (one line each, file → purpose), verification
    commands, and Non-goals (mark as TBD — the user refines these at first
    explore).
-5. **Template caveat:** `kit/openspec/changes/_TEMPLATE_/README.md`
-   contains a rate-limiter EXAMPLE — it illustrates the artifact shape. Say
-   so; it is not a spec to implement.
+6. **Template caveat:** `kit/openspec/changes/_TEMPLATE_/README.md`
+   contains a rate-limiter EXAMPLE (Python/FastAPI/pytest by design — it
+   illustrates the artifact shape). Say so; it is not a spec to implement.
 
 ### GREENFIELD — minimal touch
 

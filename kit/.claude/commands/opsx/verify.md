@@ -1,14 +1,15 @@
 ---
 description: Verify a completed change: tests + independent review + spec conformance
-allowed-tools: Task, Read, Grep, Glob, Bash(git diff*), Bash(pytest*), Bash(ruff*)
+allowed-tools: Task, Read, Grep, Glob, Bash
 ---
 
 > Parity: the OpenCode twin of this file is kit/.opencode/command/opsx-verify.md. Bodies differ on purpose (Claude dispatches subagents and runs tests in-session), but STEP LOGIC must match — if you change steps here, change them there too.
 
 Start the SDD verify phase. Verification is THREE things; run all three.
 
-1. DETERMINISTIC: run `pytest tests/ -q` and `ruff check .` yourself and
-   report exact output. Do not ask the agent to interpret — exit codes rule.
+1. DETERMINISTIC: run the test and lint commands from the AGENTS.md Stack
+   section yourself (exactly as written there) and report exact output. Do
+   not ask the agent to interpret — exit codes rule.
 2. EVAL: for each scenario in openspec/changes/<active>/specs/, confirm a
    named test exercises it. List any scenario with no test as a gap.
 3. REVIEW: dispatch the `spec-reviewer` subagent (Sonnet, read-only, it did

@@ -177,6 +177,15 @@ what turns the estimate into a number:
 
 ## Notes / gotchas
 
+- **Stack scope: Python-first by default, not stack-agnostic yet.** The
+  kit's contract files (AGENTS.md Stack section, config.yaml) have
+  `<test command>` / `<lint command>` placeholders that init fills from
+  your detected stack, and the opsx commands read those commands from
+  AGENTS.md at runtime. But the Python defaults are baked into
+  `.claude/settings.json`'s allow list and the `_TEMPLATE_` example is a
+  FastAPI/pytest change. On a non-Python project, init must also rewrite
+  the settings.json allow entries to match your Stack commands — until
+  that's proven on a real non-Python repo, treat Python as the tested path.
 - **Permission denies are guardrails, not a security boundary.** The `deny`
   list uses prefix patterns (`Bash(rm *)`, `Bash(git commit*)`, `Bash(curl *)`)
   that a determined model can bypass (`/bin/rm`, `git -C . commit`, `sh -c`).
