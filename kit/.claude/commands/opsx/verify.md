@@ -5,7 +5,13 @@ allowed-tools: Task, Read, Grep, Glob, Bash
 
 > Parity: the OpenCode twin of this file is kit/.opencode/command/opsx-verify.md. Bodies differ on purpose (Claude dispatches subagents and runs tests in-session), but STEP LOGIC must match — if you change steps here, change them there too.
 
-Start the SDD verify phase. Verification is THREE things; run all three.
+Start the SDD verify phase. Verification is FOUR things; run all four.
+
+0. VALIDATE: run `.claude/hooks/validate.sh openspec/changes/<active>/` and
+   include its output verbatim. A failing validation (proposal >500 words,
+   >15 tasks, tasks without named files) is a REQUEST CHANGES on its own —
+   fix the artifacts before reviewing code. This turns the config.yaml
+   limits from prompt-text rules into checked ones.
 
 1. DETERMINISTIC: run the test and lint commands from the AGENTS.md Stack
    section yourself (exactly as written there) and report exact output. Do

@@ -4,7 +4,13 @@ description: Verify a change: deterministic tests + spec-conformance eval + inde
 
 > Parity: the Claude Code twin of this file is kit/.claude/commands/opsx/verify.md.md. Bodies differ on purpose (OpenCode delegates to agents; the user runs tests), but STEP LOGIC must match — if you change steps here, change them there too.
 
-Run the verify phase. Verification is THREE things:
+Run the verify phase. Verification is FOUR things:
+
+0. VALIDATE: the user runs `bash .claude/hooks/validate.sh
+   openspec/changes/<active>/` (OpenCode doesn't run hooks itself). Report
+   its output verbatim; a failing validation is a REQUEST CHANGES on its
+   own. This turns the config.yaml limits from prompt-text rules into
+   checked ones.
 
 1. DETERMINISTIC: the user runs the test and lint commands from the
    AGENTS.md Stack section in their own terminal. Report exit codes as the
